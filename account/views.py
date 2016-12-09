@@ -22,9 +22,6 @@ account_views = Blueprint('account', __name__, template_folder='templates',  sta
 
 @account_views.route('/signup', methods=['GET','POST'])
 def signup():
-    debug_set = current_app.config["DEBUG"]   # settings.DEBUG
-    if debug_set == True :
-        print "\n\n\n==========> account->views.py -> signup() "
     error = None
     
     form = RegistrationForm()
@@ -45,11 +42,7 @@ def signup():
     
     
 @account_views.route('/login', methods=['GET','POST'])
-#@account_views.route('/', alias=True)
 def login():
-    debug_set = current_app.config["DEBUG"]   # settings.DEBUG
-    if debug_set == True :
-        print "\n\n\n==========> account->views.py -> login() "
     error = None
     form = LoginForm()
     if form.validate_on_submit():
@@ -72,8 +65,7 @@ def login():
 @account_views.route('/logout')
 @login_required
 def logout():
-    logout_user()
-    #return render_template('logout.html')  
+    logout_user() 
     return redirect('/')
 
 
