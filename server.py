@@ -10,40 +10,45 @@ from account.views import account_views
 from facade.views import facade_views
 
 
-db = SQLAlchemy()
-
-
-def create_app():
+def create_app(RDBMS_TYPE):
     # create our little application :)
     app = Flask(__name__)
 
-    
     ### Configure app
     #
     app.config.from_object(__name__)
     # Load default config and override config from an environment variable
     app.config.update(dict(
-        #DATABASE=os.path.join(app.root_path, 'tracking_monitoring.db'),
         SECRET_KEY='B1Xp83k/4qY1S~GIH!jnM]KES/,?CT',
         USERNAME='admin',
         PASSWORD='Nimd@'
     ))
     app.config.from_envvar('TRACKERAPP_SETTINGS', silent=True)
-    #app.config['db'] = connect_db()
 
-    
     ### Database related
     #
-    app.config['SQLALCHEMY_DATABASE_URI'] = \
-        'postgresql+psycopg2://pdbuser:pdbuser@localhost:5432/tracker_monitoring'
-        
-    db.init_app(app)
-    print 'before creating tables...'
+    # If you are using
+    if RDBMS_TYPE == 'postgresql':
+        app.config['SQLALCHEMY_DATABASE_URI'] = \
+            'postgresql+psycopg2://pdbuser:pdbuser@localhost:5432/tracker_monitoring'
+
+    else: # Default is sqlite
+        # Sqlite settings
+        # 
+        db_path = os.path.join(app.root_path, 'webapp.sqlite')
+        app.config.update(dict(
+            SQLALCHEMY_DATABASE_URI='sqlite:////' + db_path
+        ))
+    
+    db = SQLAlchemy()
+    
+    # Initialize database settings
     with app.test_request_context():
         print 'creating tables...'
         from account.models import User
         from account.models import UserAccount
         
+        db.init_app(app)
         db.create_all()
         
         # Create a test user for testing
@@ -74,5 +79,8 @@ def create_app():
 
 
 if __name__ == '__main__':
-    app = create_app()
+    # Settings
+    RDBMS_TYPE = 'sqlite' # Other RDBMS Type: postgresql
+    # Run app
+    app = create_app(RDBMS_TYPE)
     app.run(port=5000)

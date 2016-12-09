@@ -8,5 +8,6 @@ create table user_account (
     email varchar(50),
     is_active boolean,
     is_validated boolean,
-    last_login timestamp
+    last_login timestamp,
+    is_anonymous boolean
 );
