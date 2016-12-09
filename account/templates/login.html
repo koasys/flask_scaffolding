@@ -142,11 +142,11 @@
             {{ form.csrf_token }}
 
 			<div class="login_title">
-				<font size="5" style="color:#067DC1; margin-bottom:30px;">Login</font>
+				<font size="5" style="color:#067DC1; margin-bottom:5px;">Tracker Monitoring Login</font>
 			</div>
 
 			<div class="login_box">
-				<div>{{ form.username(placeholder="Type Your username)") }}</div>
+				<div>{{ form.username(placeholder="Type your username") }}</div>
 				<div class="input_passwd">{{ form.password(placeholder="Password") }}</div>
 			</div>
 			<div class="login_button">
@@ -157,13 +157,13 @@
 			{% if error %}
 				<div class="err_msg"><font color="orange">{{ error }}</font></div>
 			{% endif %}
-
+            <!-- 
 			<div class="login_bottom">	
 				<ul>
 					<li><font color="gray">No login yet?</font> <a href="{{ url_for('.signup') }}">Sign Up!</a></li>
 				</ul>
 			</div>
-
+            -->
 
         </form>
     </div>

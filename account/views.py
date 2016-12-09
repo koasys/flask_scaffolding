@@ -6,9 +6,9 @@ from models import User
 from models import NotUniqueException
 from forms import RegistrationForm, LoginForm
 from forms import ChangePasswordForm
-from flask.ext.login import login_user, login_required
-from flask.ext.login import logout_user, current_user
-from flask.ext.mail import Message, Mail
+from flask_login import login_user, login_required
+from flask_login import logout_user, current_user
+from flask_mail import Message, Mail
 from multiprocessing import Lock
 import utils
 from utils import csrf_protect
@@ -83,7 +83,7 @@ def change_password():
             current_user.update_password(form.new_password.data)
             current_user.save()
             flash("Your password has been updated.", category='index_page')
-            return redirect(url_for('.list_projects'))
+            return redirect(request.args.get("next") or url_for("facade.dashboard"))
         else:
             flash("Your password does not match.", category='error')
             return render_template('change_password.html', form=form)    

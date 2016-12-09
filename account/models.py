@@ -1,7 +1,8 @@
 import json
 import string
 import random
-from flask.ext.login import UserMixin
+#from flask.ext.login import UserMixin
+from flask_login import UserMixin
 from flask import current_app
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_sqlalchemy import SQLAlchemy
@@ -58,16 +59,18 @@ class User(UserMixin):
 
         
     def save(self):
-        # Get db object
-        #db = current_app.config["db"]
-        # Make UserAccount to update
-        obj_json = json.dumps(self, default=lambda o: o.__dict__)
-        
+        # Make UserAccount to update        
         user = UserAccount.query.filter_by(username=self.username).first()
         if user:
             # Update curr user
-            UserAccount.query.filter_by(username=self.username).first().update(
-                obj_json)
+            user.username=self.username
+            user.firstname=self.firstname
+            user.password=self.password_hash
+            user.middlename=self.middlename 
+            user.lastname=self.lastname
+            user.email=self.email 
+            user.is_active=self.active 
+            user.is_anonymous=self.anonymous
         else:
             # Insert new user
             user = UserAccount(username=self.username, 

@@ -4,7 +4,7 @@ import sqlite3
 from flask import Flask, request, session, g, redirect, url_for, abort
 from flask import render_template, flash, Blueprint
 from flask_sqlalchemy import SQLAlchemy
-from flask.ext.login import LoginManager
+from flask_login import LoginManager
 
 from account.views import account_views
 from facade.views import facade_views
@@ -21,7 +21,8 @@ def create_app(RDBMS_TYPE):
     app.config.update(dict(
         SECRET_KEY='B1Xp83k/4qY1S~GIH!jnM]KES/,?CT',
         USERNAME='admin',
-        PASSWORD='Nimd@'
+        PASSWORD='Nimd@',
+        SQLALCHEMY_TRACK_MODIFICATIONS = False
     ))
     app.config.from_envvar('TRACKERAPP_SETTINGS', silent=True)
 
@@ -44,15 +45,15 @@ def create_app(RDBMS_TYPE):
     
     # Initialize database settings
     with app.test_request_context():
-        print 'creating tables...'
+        #print 'creating tables...'
         from account.models import User
-        from account.models import UserAccount
+        #from account.models import UserAccount
         
         db.init_app(app)
-        db.create_all()
+        #db.create_all()
         
         # Create a test user for testing
-        auser = User.create(username='tester1', password='tester', 
+        auser = User.create(username='tester', password='tester', 
             firstname='tester', middlename='', lastname='tester', email='t@email.com')
         if auser:
             # If this user is being registered for the first time.
@@ -81,6 +82,6 @@ def create_app(RDBMS_TYPE):
 if __name__ == '__main__':
     # Settings
     RDBMS_TYPE = 'sqlite' # Other RDBMS Type: postgresql
-    # Run app
+    # Run app and let it listen port 5000
     app = create_app(RDBMS_TYPE)
     app.run(host='0.0.0.0', port=5000)

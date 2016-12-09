@@ -1,6 +1,6 @@
 from flask import render_template, Blueprint
 from flask import Flask, current_app, session
-from flask.ext.login import login_user, login_required
+from flask_login import login_user, login_required
 
 
 # Define the blueprint

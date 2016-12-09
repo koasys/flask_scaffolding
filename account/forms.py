@@ -1,4 +1,5 @@
-from flask_wtf import Form
+from flask_wtf import FlaskForm as Form
+#import FlaskForm as Form
 from wtforms import BooleanField, TextField, PasswordField, validators
 from wtforms import TextAreaField
 from flask_wtf import RecaptchaField
