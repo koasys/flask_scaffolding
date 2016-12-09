@@ -83,4 +83,4 @@ if __name__ == '__main__':
     RDBMS_TYPE = 'sqlite' # Other RDBMS Type: postgresql
     # Run app
     app = create_app(RDBMS_TYPE)
-    app.run(port=5000)
+    app.run(host='0.0.0.0', port=5000)
