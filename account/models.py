@@ -1,7 +1,6 @@
 import json
 import string
 import random
-#from flask.ext.login import UserMixin
 from flask_login import UserMixin
 from flask import current_app
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -46,7 +45,6 @@ class User(UserMixin):
     
     def authenticate(self, password):
         # if password is same with password in db
-        # set self.authenticated = True
         return check_password_hash(self.password_hash, password)
             
         
@@ -82,20 +80,10 @@ class User(UserMixin):
             
         db.session.commit()
         
-        #mongo = current_app._get_current_object().data.driver
-        #obj_str = json.dumps(self, default=lambda o: o.__dict__)
-        #obj = json.loads(obj_str)
-        #print 'new user json is: %s' % obj_str
-        #mongo.db.users.update({'username':self.username},obj, upsert=True)
-        
         
     @staticmethod
     def create(username, password, firstname, middlename, lastname, email):
-        #db = current_app.config["db"]
-        #mongo = current_app._get_current_object().data.driver
-        # To check if username is already existing.
-        #user = mongo.db.users.find_one({'username': username})
-        #user = db.session.query().filter(UserAccount.username=self.username).first()
+
         user = UserAccount.query.filter_by(username=username).first()
         
         if user:
@@ -120,10 +108,7 @@ class User(UserMixin):
         This method should be called inside of request context in order to get
         current_app object.
         '''
-        #mongo = current_app._get_current_object().data.driver
-        #db = current_app.config["db"]
         
-        #user = mongo.db.users.find_one({'username': username})
         user = UserAccount.query.filter_by(username=username).first()
         
         if user is None:
@@ -137,9 +122,6 @@ class User(UserMixin):
             
     @staticmethod
     def get_with_userid(userid):
-        #mongo = current_app._get_current_object().data.driver
-        #db = current_app.config["db"]
-        #user = mongo.db.users.find_one({'_id': ObjectId(useroid)})
         return UserAccount.query.filter_by(id=userid).first()
         
 

@@ -1,20 +1,22 @@
 <!DOCTYPE HTML>
 <html>
 
-{% include '_facade_head.html' %}
+{% include '_main_head.html' %}
 
 
     <body style="margin: 0 auto;width:1000px;">
 
-        {% include '_facade_header.html' %}
+        {% include '_main_header.html' %}
 
         {% with messages = get_flashed_messages(category_filter=["index_page"]) %}
           {% if messages %}
-            <ul class=flashes>
-            {% for message in messages %}
-              <li>{{ message }}</li>
-            {% endfor %}
-            </ul>
+            <div class="alert alert-warning alert-dismissible">
+                <ul class=flashes>
+                {% for message in messages %}
+                  <li>{{ message }}</li>
+                {% endfor %}
+                </ul>
+            </div>    
           {% endif %}
         {% endwith %}    
     

@@ -4,11 +4,15 @@ from flask_login import login_user, login_required
 
 
 # Define the blueprint
-facade_views = Blueprint('facade', __name__, template_folder='templates',
+main_views = Blueprint('main', __name__, template_folder='templates',
     static_folder='static')
-    
-    
-@facade_views.route('/')
+
+
+@main_views.route('/index')
+@login_required
 def index():
-    return render_template('index.html')  
+    return render_template('main_index.html')  
+
+
+
 

@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Login</title>
+    <title>{{config['WEBAPP_NAME']}}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- Bootstrap -->
-    <link href="{{ url_for('.static', filename='bootstrap/css/bootstrap.min.css') }}" rel="stylesheet" media="screen">
-    <link href="{{ url_for('.static', filename='css/account.css')}}" rel="stylesheet" media="screen">
-    <script src="{{ url_for('.static', filename='bootstrap/js/bootstrap.min.js') }}"></script>
+    <link href="{{ url_for('static', filename='bootstrap/css/bootstrap.min.css') }}" rel="stylesheet" media="screen">
+    <link href="{{ url_for('static', filename='css/account.css')}}" rel="stylesheet" media="screen">
+    <script src="{{ url_for('static', filename='bootstrap/js/bootstrap.min.js') }}"></script>
 </head>
 <style type="text/css">
     #wrapper {
@@ -15,7 +15,7 @@
         padding-top:30px;
         font-size:13px;
         color: #045FB4;
-        font-family: Verdana, sans-serif;
+        /*font-family: Verdana, sans-serif;*/
     }
     legend {
         color:#0481b1;
@@ -136,13 +136,15 @@
 
     <div id="wrapper">
 
-
-        <form method="post" action="{{ url_for('.login') }}">
+        <form method="post" action="{{ url_for('account.login') }}">
 
             {{ form.csrf_token }}
 
 			<div class="login_title">
 				<font size="5" style="color:#067DC1; margin-bottom:5px;">Tracker Monitoring Login</font>
+                <span style="margin-left:60px;">
+                    <a href="/"><font size="2.5">Cancel Login</font></a>
+                </span>
 			</div>
 
 			<div class="login_box">
@@ -160,12 +162,13 @@
             <!-- 
 			<div class="login_bottom">	
 				<ul>
-					<li><font color="gray">No login yet?</font> <a href="{{ url_for('.signup') }}">Sign Up!</a></li>
+					<li><font color="gray">No login yet?</font> <a href="{{ url_for('account.signup') }}">Sign Up!</a></li>
 				</ul>
 			</div>
             -->
 
         </form>
+        
     </div>
 
 

@@ -8,13 +8,14 @@ from flask_login import LoginManager
 
 from account.views import account_views
 from facade.views import facade_views
+from main.views import main_views
 
 
 def create_app(RDBMS_TYPE):
     # create our little application :)
     app = Flask(__name__)
 
-    ### Configure app
+    ## Configure app
     #
     app.config.from_object(__name__)
     # Load default config and override config from an environment variable
@@ -22,11 +23,12 @@ def create_app(RDBMS_TYPE):
         SECRET_KEY='B1Xp83k/4qY1S~GIH!jnM]KES/,?CT',
         USERNAME='admin',
         PASSWORD='Nimd@',
-        SQLALCHEMY_TRACK_MODIFICATIONS = False
+        SQLALCHEMY_TRACK_MODIFICATIONS = False,
+        WEBAPP_NAME='Tracker Monitoring'
     ))
     app.config.from_envvar('TRACKERAPP_SETTINGS', silent=True)
 
-    ### Database related
+    ## Database related
     #
     # If you are using
     if RDBMS_TYPE == 'postgresql':
@@ -43,28 +45,28 @@ def create_app(RDBMS_TYPE):
     
     db = SQLAlchemy()
     
-    # Initialize database settings
+    ## Initialize database settings
+    #
     with app.test_request_context():
-        #print 'creating tables...'
+
         from account.models import User
-        #from account.models import UserAccount
-        
         db.init_app(app)
-        #db.create_all()
         
         # Create a test user for testing
-        auser = User.create(username='tester', password='tester', 
-            firstname='tester', middlename='', lastname='tester', email='t@email.com')
+        auser = User.create(username='tester', password='tester123', 
+            firstname='Mr.', middlename='', lastname='Tester', email='t@email.com')
         if auser:
             # If this user is being registered for the first time.
             auser.save()
             
-    ### Blueprint setup
+    ## Blueprint setup
     #
     app.register_blueprint(account_views, url_prefix='/account')
-    app.register_blueprint(facade_views, url_prefix='')    
+    app.register_blueprint(facade_views, url_prefix='')
+    app.register_blueprint(main_views,url_prefix='/main')
     
-    # Flask-Login Configuration
+    ## Flask-Login Configuration
+    #
     login_manager = LoginManager()
     login_manager.session_protection = "strong"
     login_manager.init_app(app)

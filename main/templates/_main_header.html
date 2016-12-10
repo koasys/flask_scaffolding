@@ -4,7 +4,7 @@
     <div class="span4">
         <span style="margin-right:30px;">
             Welcome,&nbsp; 
-            <a href="{{ url_for('account.change_password')}}">
+            <a href="{{ url_for('account.change_password',next=request.endpoint)}}">
                 {{ current_user.firstname }} {{ current_user.lastname }}</span>
             </a>
         <span><a href="{{ url_for('account.logout')}}">logout</a></span>

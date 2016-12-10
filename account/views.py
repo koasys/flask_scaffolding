@@ -9,18 +9,15 @@ from forms import ChangePasswordForm
 from flask_login import login_user, login_required
 from flask_login import logout_user, current_user
 from flask_mail import Message, Mail
-from multiprocessing import Lock
 import utils
 from utils import csrf_protect
 
 from werkzeug.security import generate_password_hash
 #encryption_method = 'pbkdf2:sha256:5000'
 
-lock = Lock()
-
 account_views = Blueprint('account', __name__, template_folder='templates',  static_folder='static')
 
-@account_views.route('/signup', methods=['GET','POST'])
+@account_views.route('/hiddensignup', methods=['GET','POST'])
 def signup():
     error = None
     
@@ -55,7 +52,7 @@ def login():
             if user.authenticate(password):
                 login_user(user)
                 flash("Logged in successfully.")
-                return redirect(request.args.get("next") or url_for("facade.dashboard"))
+                return redirect(request.args.get("next") or url_for("main.index"))
             else:
                 error = "Your username or password is not valid"
                 
@@ -75,15 +72,13 @@ def change_password():
     '''
     Change a user's password
     '''
-    #form = ChangePasswordForm(request.form)
-    #if request.method == 'POST' and form.validate():
     form = ChangePasswordForm()
     if form.validate_on_submit():
         if current_user.check_password(form.old_password.data):
             current_user.update_password(form.new_password.data)
             current_user.save()
             flash("Your password has been updated.", category='index_page')
-            return redirect(request.args.get("next") or url_for("facade.dashboard"))
+            return redirect(request.args.get("next") or url_for("main.index"))
         else:
             flash("Your password does not match.", category='error')
             return render_template('change_password.html', form=form)    

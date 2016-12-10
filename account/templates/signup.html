@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="en">
 <head>
-    <title>Register form with HTML5 using placeholder and CSS3</title>
+    <title>{{config['WEBAPP_NAME']}}</title>
 </head>
 <style type="text/css">
     #wrapper {
@@ -122,7 +122,7 @@
         {% if error %}
         {{ error }}<br/><br/>
         {% endif %}
-        <form method="post" action="{{ url_for('.signup') }}">
+        <form method="post" action="{{ url_for('account.signup') }}">
             <fieldset>
             {{ form.csrf_token }}    
             <legend>Signup</legend>
@@ -137,9 +137,9 @@
             {{ form.recaptcha }}
             {% endif %}
             
-            <p><input type="submit" value="Create my account">
+            <p><input type="submit" value="create account">
                 <span style="margin-left:70px;font-size:15px;">
-                    <a href="{{ url_for('.login') }}">Cancel</a>
+                    <a href="{{ url_for('account.login') }}">Cancel</a>
                 </span>
             </fieldset>
         </form>
