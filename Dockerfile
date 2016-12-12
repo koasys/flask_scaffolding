@@ -14,12 +14,12 @@ RUN apt-get -y install apache2 libapache2-mod-wsgi
 
 RUN ls -al
 
-ADD . ./webapp
+ADD . /var/www/webapp
 
 #RUN mv flask_scaffolding webapp
 #RUN echo "Moved to webapp"
 #RUN ls -al
-WORKDIR webapp
+WORKDIR /var/www/webapp
 RUN echo "Current location"
 RUN pwd
 RUN pip install -r requirements.txt
@@ -37,5 +37,7 @@ RUN sqlite3 webapp.sqlite < schema_sqlite.sql
 RUN a2enmod wsgi
 COPY __artifacts__/apache_configuration.txt /etc/apache2/sites-available/webserver.conf
 RUN a2ensite webserver
+
+CMD  /usr/sbin/apache2ctl -D FOREGROUND
 
 
