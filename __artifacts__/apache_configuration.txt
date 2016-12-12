@@ -2,9 +2,9 @@
     ServerName 111.111.111.111
 
     WSGIDaemonProcess webserver user=admin group=admin processes=4 threads=4
-    WSGIScriptAlias / /home/admin/PYENV/gtserver/gtserver.wsgi
+    WSGIScriptAlias / /var/www/webapp/server.wsgi
 
-    <Directory /home/admin/PYENV/gtserver>
+    <Directory /var/www/webapp>
         WSGIProcessGroup gtserver
         WSGIApplicationGroup %{GLOBAL}
         Order deny,allow
