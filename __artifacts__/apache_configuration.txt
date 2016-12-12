@@ -1,7 +1,7 @@
 <VirtualHost *:80>
     ServerName 111.111.111.111
 
-    WSGIDaemonProcess webserver user=ubuntu group=admin processes=4 threads=4
+    WSGIDaemonProcess webserver processes=4 threads=4
     WSGIScriptAlias / /var/www/webapp/server.wsgi
 
     <Directory /var/www/webapp>
