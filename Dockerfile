@@ -40,6 +40,6 @@ COPY __artifacts__/apache_configuration.txt /etc/apache2/sites-available/webserv
 RUN a2ensite webserver
 
 #CMD  /usr/sbin/apache2ctl -D FOREGROUND
-#CMD service apache2 restart
+CMD service apache2 restart
 
 
