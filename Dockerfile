@@ -24,6 +24,7 @@ RUN echo "Current location"
 RUN pwd
 RUN pip install -r requirements.txt
 
+RUN chmod -R a+rX *
 
 ## Initialize sqlite DB
 #
