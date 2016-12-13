@@ -5,7 +5,7 @@
     WSGIScriptAlias / /var/www/webapp/server.wsgi
 
     <Directory /var/www/webapp>
-        WSGIProcessGroup gtserver
+        WSGIProcessGroup webserver
         WSGIApplicationGroup %{GLOBAL}
         Order deny,allow
         Allow from all

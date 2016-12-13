@@ -39,7 +39,7 @@ RUN a2enmod wsgi
 COPY __artifacts__/apache_configuration.txt /etc/apache2/sites-available/webserver.conf
 RUN a2ensite webserver
 
-#CMD  /usr/sbin/apache2ctl -D FOREGROUND
-CMD service apache2 restart
+CMD  /usr/sbin/apache2ctl -D FOREGROUND
+#CMD service apache2 restart
 
 
