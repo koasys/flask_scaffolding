@@ -32,7 +32,7 @@
     fieldset {
         /*
         border-radius:4px;
-        background: #fff; 
+        background: #fff;
         background: -moz-linear-gradient(#fff, #f9fdff);
         background: -o-linear-gradient(#fff, #f9fdff);
         background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#fff), to(#f9fdff));
@@ -76,7 +76,7 @@
         -o-transition-duration: 400ms;
         -o-transition-property: width, background;
         -o-transition-timing-function: ease;
-      
+
         border-color:#ccc;
         box-shadow:0 0 5px rgba(4, 129, 177, 0.5);
         /* opacity:0.8; */
@@ -124,13 +124,13 @@
     #prjlogin-mssg {
         text-align: center;
         font-family: Verdana, sans-serif;
-        color: #585858 ; 
+        color: #585858 ;
         width:380px;
         margin: 0 auto;
         padding-top: 10px;
         background-color: #dff0d8;
     }
-    
+
 </style>
 <body>
 
@@ -141,9 +141,9 @@
             {{ form.csrf_token }}
 
 			<div class="login_title">
-				<font size="5" style="color:#067DC1; margin-bottom:5px;">Tracker Monitoring Login</font>
-                <span style="margin-left:60px;">
-                    <a href="/"><font size="2.5">Cancel Login</font></a>
+				<font size="5" style="color:#067DC1; margin-bottom:5px;">Flask Scaffolding Login</font>
+                <span style="margin-left:80px;">
+                    <a href="/"><font size="2.8">Cancel</font></a>
                 </span>
 			</div>
 
@@ -159,16 +159,16 @@
 			{% if error %}
 				<div class="err_msg"><font color="orange">{{ error }}</font></div>
 			{% endif %}
-            <!-- 
-			<div class="login_bottom">	
+
+			<div class="login_bottom">
 				<ul>
-					<li><font color="gray">No login yet?</font> <a href="{{ url_for('account.signup') }}">Sign Up!</a></li>
+					<li><font color="gray">No login yet?</font> <a href="{{ url_for('account.signup') }}"><font size="2.8">Sign Up!</font></a></li>
 				</ul>
 			</div>
-            -->
+
 
         </form>
-        
+
     </div>
 
 

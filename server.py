@@ -24,7 +24,7 @@ def create_app(RDBMS_TYPE):
         USERNAME='admin',
         PASSWORD='Nimd@',
         SQLALCHEMY_TRACK_MODIFICATIONS = False,
-        WEBAPP_NAME='Tracker Monitoring'
+        WEBAPP_NAME='Flask Scaffolding'
     ))
     app.config.from_envvar('TRACKERAPP_SETTINGS', silent=True)
 
@@ -37,56 +37,57 @@ def create_app(RDBMS_TYPE):
 
     else: # Default is sqlite
         # Sqlite settings
-        # 
+        #
         db_path = os.path.join(app.root_path, 'webapp.sqlite')
         app.config.update(dict(
             SQLALCHEMY_DATABASE_URI='sqlite:////' + db_path
         ))
-    
+
     db = SQLAlchemy()
-    
+
     ## Initialize database settings
     #
     with app.test_request_context():
 
         from account.models import User
         db.init_app(app)
-        
+
         # Create a test user for testing
-        auser = User.create(username='tester', password='tester123', 
+        auser = User.create(username='tester', password='tester123',
             firstname='Mr.', middlename='', lastname='Tester', email='t@email.com')
         if auser:
             # If this user is being registered for the first time.
             auser.save()
-            
+
     ## Blueprint setup
     #
     app.register_blueprint(account_views, url_prefix='/account')
     app.register_blueprint(facade_views, url_prefix='')
     app.register_blueprint(main_views,url_prefix='/main')
-    
+
     ## Flask-Login Configuration
     #
     login_manager = LoginManager()
     login_manager.session_protection = "strong"
     login_manager.init_app(app)
     login_manager.login_view = '/account/login'
-    
+
     # Required method to connect Flask-Login with custom User class
     @login_manager.user_loader
     def load_user(username):
         print 'load_user - userid', username
         return User.get_with_username(username)
-    
+
     return app
 
 
 if __name__ == '__main__':
     # Settings
-    RDBMS_TYPE = 'sqlite' # Other RDBMS Type: postgresql
+    #RDBMS_TYPE = 'sqlite' # Other RDBMS Type: postgresql
+    RDBMS_TYPE = 'postgresql'
     # Run app and let it listen port 5000
     app = create_app(RDBMS_TYPE)
     app.run(host='0.0.0.0', port=5000)
-    
-    
+
+
 app = create_app('sqlite')

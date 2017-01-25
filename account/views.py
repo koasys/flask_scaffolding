@@ -17,15 +17,15 @@ from werkzeug.security import generate_password_hash
 
 account_views = Blueprint('account', __name__, template_folder='templates',  static_folder='static')
 
-@account_views.route('/hiddensignup', methods=['GET','POST'])
+@account_views.route('/signup', methods=['GET','POST'])
 def signup():
     error = None
-    
+
     form = RegistrationForm()
-    
+
     if form.validate_on_submit():
         user = User.create(username=form.email.data, email=form.email.data,
-            firstname=form.firstname.data, middlename=form.middlename.data, 
+            firstname=form.firstname.data, middlename=form.middlename.data,
             lastname=form.lastname.data, password=form.password.data)
         if user is not None:
             user.save()
@@ -34,10 +34,10 @@ def signup():
             return render_template('signup_done.html')
         else:
             error = 'Your email has been already used! Use new email address.'
-        
+
     return render_template('signup.html', form=form, error=error)
-    
-    
+
+
 @account_views.route('/login', methods=['GET','POST'])
 def login():
     error = None
@@ -55,14 +55,14 @@ def login():
                 return redirect(request.args.get("next") or url_for("main.index"))
             else:
                 error = "Your username or password is not valid"
-                
+
     return render_template("login.html", form=form, error=error)
 
 
 @account_views.route('/logout')
 @login_required
 def logout():
-    logout_user() 
+    logout_user()
     return redirect('/')
 
 
@@ -81,5 +81,5 @@ def change_password():
             return redirect(request.args.get("next") or url_for("main.index"))
         else:
             flash("Your password does not match.", category='error')
-            return render_template('change_password.html', form=form)    
+            return render_template('change_password.html', form=form)
     return render_template('change_password.html', form=form)
